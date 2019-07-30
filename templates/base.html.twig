@@ -23,53 +23,30 @@
           <li class="nav-item active">
             <a class="nav-link" href="#">Categorie</a>
           </li>
-          {# <li class="nav-item">
-                                                                                                                                                                                      <a class="nav-link" href="#">Features</a>
-                                                                                                                                                                                    </li>
-                                                                                                                                                                                    <li class="nav-item">
-                                                                                                                                                                                      <a class="nav-link" href="#">Pricing</a>
-                                                                                                                                                                                    </li>
-                                                                                                                                                                                    <li class="nav-item">
-                                                                                                                                                                                      <a class="nav-link" href="#">About</a>
-                                                                                                                                                                                    </li> #}
         </ul>
 
-        {# <ul class="navbar-nav mr-auto">
-                                                                                                                                                  <li class="nav-item active">
-                                                                                                                                                    <a class="nav-link" href="#">Home</a>
-                                                                                                                                                  </li>
-                                                                                                                                                  <li class="nav-item">
-                                                                                                                                                    <a class="nav-link" href="#">Features</a>
-                                                                                                                                                  </li>
-                                                                                                                                                  <li class="nav-item">
-                                                                                                                                                    <a class="nav-link" href="#">Pricing</a>
-                                                                                                                                                  </li>
-                                                                                                                                                  <li class="nav-item">
-                                                                                                                                                    <a class="nav-link" href="#">About</a>
-                                                                                                                                                  </li>
-                                                                                                                                                </ul> #}
-
         <ul class="navbar-nav">
-
-          <li class="nav-item">
-            <a class="btn btn-info mr-1" href="{{ path('account_register') }}">Inscription
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="btn btn-success mr-1" href="{{ path('security_login') }}">Connexion
-            </a>
-          </li>
-
-          {# <li class="nav-item">
-                          Connecté en tant que
-                          {{ app.user.firstName }}
-                        </li> #}
-          <li class="nav-item">
-            <a class="btn btn-warning mr-1" href="{{ path('security_logout') }}">Déconnexion
-            </a>
-          </li>
-
-
+          {% if not is_granted("ROLE_USER") %}
+            <li class="nav-item">
+              <a class="btn btn-info mr-1" href="{{ path('account_register') }}">Inscription
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-success mr-1" href="{{ path('security_login') }}">Connexion
+              </a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <button class="btn btn-outline-warning mr-2">
+                Connecté en tant que
+                {{ app.user.name }}
+              </button>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-danger mr-1" href="{{ path('security_logout') }}">Déconnexion
+              </a>
+            </li>
+          {% endif %}
         </ul>
 
       </div>

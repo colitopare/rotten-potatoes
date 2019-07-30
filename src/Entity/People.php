@@ -83,6 +83,11 @@ class People
         return $this->id;
     }
 
+    public function getFullName(): ?string
+    {
+        return $this->firstName . " " . $this->lastName;
+    }
+
     public function getFirstName(): ?string
     {
         return $this->firstName;
