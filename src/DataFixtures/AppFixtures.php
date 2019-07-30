@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
 use App\Entity\Movie;
 use App\Entity\People;
 use App\Entity\Rating;
@@ -49,6 +50,18 @@ class AppFixtures extends Fixture
         $rating->setComment($faker->realText())
           ->setNotation($faker->numberBetween(0, 5))
           ->setMovie($movie);
+
+        for ($u = 0; $u < 10; $u++) {
+          $user = new User;
+
+          $user->setEmail('user' . $u . '@gmail.com')
+            ->setName($faker->lastName)
+            ->setAvatar($faker->imageUrl(63, 63, 'people'))
+            ->setPassword('pass');
+
+          $manager->persist($user);
+        }
+
 
         $manager->persist($rating);
       }
