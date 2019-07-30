@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Movie;
 use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -12,13 +13,36 @@ class AppFixtures extends Fixture
   {
     $faker = \Faker\Factory::create('fr_FR');
 
+    $categoryTitle = ["Comédie", "Film fantastique", "Dramatique", "Film d'action", "Film d'horreur", "Polar", "Thriller", "Romantique"];
 
-    for ($c = 0; $c < 10; $c++) {
+    $categories = [];
+
+    for ($c = 0; $c < count($categoryTitle); $c++) {
       $category = new Category;
-      $category->setTitle($faker->realText(20));
+      $category->setTitle($categoryTitle[$c]);
+
+      // pour récupérer les instances de Category
+      $categories[] = $category;
+
       $manager->persist($category);
     }
 
+
+    for ($m = 0; $m < 10; $m++) {
+      $movie = new Movie;
+      $movie->setTitle($faker->realText(20))
+        ->setPoster($faker->imageUrl(400, 600))
+        ->setReleasedAt($faker->dateTimeBetween('-10years', '-1month'))
+        ->setSynopsis($faker->realText());
+
+      $randomCategories = $faker->randomElements($categories, mt_rand(1, 4));
+
+      foreach ($randomCategories as $category) {
+        $movie->addCategory($category);
+      }
+
+      $manager->persist($movie);
+    }
 
     $manager->flush();
   }
