@@ -58,9 +58,21 @@ class Movie
      */
     private $categories;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\People", inversedBy="directed")
+     */
+    private $director;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\People", inversedBy="actedIn")
+     * @ORM\JoinTable(name="movie_people")
+     */
+    private $actors;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->actors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -149,6 +161,44 @@ class Movie
     {
         if ($this->categories->contains($category)) {
             $this->categories->removeElement($category);
+        }
+
+        return $this;
+    }
+
+    public function getDirector(): ?People
+    {
+        return $this->director;
+    }
+
+    public function setDirector(?People $director): self
+    {
+        $this->director = $director;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|People[]
+     */
+    public function getActors(): Collection
+    {
+        return $this->actors;
+    }
+
+    public function addActor(People $actor): self
+    {
+        if (!$this->actors->contains($actor)) {
+            $this->actors[] = $actor;
+        }
+
+        return $this;
+    }
+
+    public function removeActor(People $actor): self
+    {
+        if ($this->actors->contains($actor)) {
+            $this->actors->removeElement($actor);
         }
 
         return $this;

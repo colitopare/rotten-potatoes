@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -58,6 +60,23 @@ class People
      * @Assert\Url(message="l'URL doit être valide !")
      */
     private $picture;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Movie", mappedBy="director")
+     */
+    private $directed;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Movie", mappedBy="actors")
+     * @ORM\JoinTable(name="movie_people")
+     */
+    private $actedIn;
+
+    public function __construct()
+    {
+        $this->directed = new ArrayCollection();
+        $this->actedIn = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -132,6 +151,65 @@ class People
     public function setPicture(string $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Movie[]
+     */
+    public function getDirected(): Collection
+    {
+        return $this->directed;
+    }
+
+    public function addDirected(Movie $directed): self
+    {
+        if (!$this->directed->contains($directed)) {
+            $this->directed[] = $directed;
+            $directed->setDirector($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDirected(Movie $directed): self
+    {
+        if ($this->directed->contains($directed)) {
+            $this->directed->removeElement($directed);
+            // set the owning side to null (unless already changed)
+            if ($directed->getDirector() === $this) {
+                $directed->setDirector(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Movie[]
+     */
+    public function getActedIn(): Collection
+    {
+        return $this->actedIn;
+    }
+
+    public function addActedIn(Movie $actedIn): self
+    {
+        if (!$this->actedIn->contains($actedIn)) {
+            $this->actedIn[] = $actedIn;
+            $actedIn->addActor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActedIn(Movie $actedIn): self
+    {
+        if ($this->actedIn->contains($actedIn)) {
+            $this->actedIn->removeElement($actedIn);
+            $actedIn->removeActor($this);
+        }
 
         return $this;
     }
