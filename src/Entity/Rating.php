@@ -39,6 +39,11 @@ class Rating
      */
     private $comment;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Movie", inversedBy="ratings")
+     */
+    private $movie;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,5 +95,17 @@ class Rating
             // je renseigne maintenant
             $this->createdAt = new \DateTime();
         }
+    }
+
+    public function getMovie(): ?Movie
+    {
+        return $this->movie;
+    }
+
+    public function setMovie(?Movie $movie): self
+    {
+        $this->movie = $movie;
+
+        return $this;
     }
 }

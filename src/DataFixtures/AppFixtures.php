@@ -44,6 +44,15 @@ class AppFixtures extends Fixture
         $movie->addCategory($category);
       }
 
+      for ($r = 0; $r < mt_rand(0, 10); $r++) {
+        $rating = new Rating;
+        $rating->setComment($faker->realText())
+          ->setNotation($faker->numberBetween(0, 5))
+          ->setMovie($movie);
+
+        $manager->persist($rating);
+      }
+
       // pour récupérer les instances de Movie
       $movies[] = $movie;
 
@@ -58,10 +67,11 @@ class AppFixtures extends Fixture
         ->setBirthday($faker->dateTimeBetween('-50years', '-10years'))
         ->setPicture($faker->imageUrl(200, 200, 'people'));
 
-      // Director
-      $randomMovie = $faker->randomElement($movies);
-      $people->addDirected($randomMovie);
-
+      if ($faker->boolean()) {
+        // Director
+        $randomMovie = $faker->randomElement($movies);
+        $people->addDirected($randomMovie);
+      }
       // Actors dans les films
       $randomMovies = $faker->randomElements($movies, mt_rand(0, 5));
       foreach ($randomMovies as $movie) {
@@ -69,15 +79,6 @@ class AppFixtures extends Fixture
       }
 
       $manager->persist($people);
-    }
-
-    for ($r = 0; $r < 10; $r++) {
-      $rating = new Rating;
-      $rating->setComment($faker->realText())
-        ->setNotation($faker->numberBetween(0, 5));
-
-
-      $manager->persist($rating);
     }
 
     $manager->flush();
