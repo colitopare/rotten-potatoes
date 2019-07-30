@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Movie;
 use App\Entity\Category;
+use App\Entity\People;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -43,6 +44,19 @@ class AppFixtures extends Fixture
 
       $manager->persist($movie);
     }
+
+    for ($p = 0; $p < 20; $p++) {
+      $people = new People;
+      $people->setFirstName($faker->firstName)
+        ->setlastName($faker->lastName)
+        ->setDescription($faker->realText())
+        ->setBirthday($faker->dateTimeBetween('-50years', '-10years'))
+        ->setPicture($faker->imageUrl(200, 200, 'people'));
+
+      $manager->persist($people);
+    }
+
+
 
     $manager->flush();
   }
