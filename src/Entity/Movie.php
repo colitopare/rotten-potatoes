@@ -81,9 +81,17 @@ class Movie
         $this->ratings = new ArrayCollection();
     }
 
-    public function getMoyenne()
+    // renvoie la moyenne des notes
+    public function getMoyenne(): float
     {
-        // calcul et retour
+        $nbreNotation = count($this->getRatings()->getIterator());
+        $sumNote = 0;
+
+        foreach ($this->getRatings()->getIterator() as $rating) {
+            $sumNote += $rating->getNotation();
+        }
+
+        return $sumNote / $nbreNotation;
     }
 
     public function getId(): ?int
