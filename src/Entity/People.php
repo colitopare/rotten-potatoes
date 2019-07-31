@@ -63,12 +63,14 @@ class People
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Movie", mappedBy="director")
+     * @ORM\OrderBy({"releasedAt" = "DESC"})
      */
     private $directed;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Movie", mappedBy="actors")
      * @ORM\JoinTable(name="movie_people")
+     * @ORM\OrderBy({"releasedAt" = "DESC"})
      */
     private $actedIn;
 

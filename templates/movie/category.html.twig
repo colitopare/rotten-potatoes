@@ -1,0 +1,7 @@
+{# Permet d'afficher toutes les category pour pouvoir faire un menu #}
+
+{% for categorie in category %}
+  <a class="list-group-item list-group-item-action" href="{{ path('show_category', {slug: categorie.slug}) }}">
+    {{ categorie.title }}
+  </a>
+{% endfor %}

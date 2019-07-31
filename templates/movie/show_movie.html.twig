@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title "Liste film d'une catégoie"%}
+{% block title "Film"%}
 
 
 {% block body %}
@@ -17,34 +17,55 @@
       <div class="card-body">
         <p class="card-text">
           Le réalisateur :
-          {{ movie.director.fullName }}
-
-
+          <a class="btn btn-outline-success m-2" href="{{ path('show_people', {slug: movie.director.slug }) }}">
+            {{ movie.director.fullName }}
+          </a>
         </p>
       </div>
       <div class="card-body">
         <p class="card-text">
           Les acteurs :
           {% for actor in movie.actors %}
-            {{actor.fullName}}
-            -
+            <a class="btn btn-outline-success m-2" href="{{ path('show_people', {slug: actor.slug }) }}">
+              {{actor.fullName}}
+            </a>
           {% endfor %}
         </p>
       </div>
       <div class="card-body">
-        <p class="card-text">Notes :
+        <p class="card-text">Toutes les notes :
           {% for rating in movie.ratings %}
+
             {{rating.notation}}
+
             ,
           {% endfor %}
         </p>
       </div>
 
       <div class="card-body">
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <p class="card-text">Moyenne :
+        </p>
       </div>
 
+      {% if is_granted("ROLE_USER") %}
+        <div class="card-body">
+          <h3 class="text-center">Ajouter votre avis pour ce film</h3>
+          <p class="card-text">
+            {{form_start(formRating)}}
+            {{ form_widget(formRating) }}
+            <div class="text-right">
+              <button class="btn btn-success" type="submit">Valider votre avis</button>
+            </div>
+            {{form_end(formRating)}}
+          </p>
+        </div>
+      {% else %}
+        <div class="card-body text-center">
+          Connectez-vous pour donner votre avis
+        </a>
+      </div>
+    {% endif %}
 
-    </div>
   </div>
-{% endblock %}
+</div>{% endblock %}

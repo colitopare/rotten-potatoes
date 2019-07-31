@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title "People"%}
+
+
+{% block body %}
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="text-center mb-5">
+        {{people.fullName}}
+      </h1>
+      <img src="{{people.picture}}" alt="Artiste {{people.fullName}}" style="height: 500px; width: 50%; margin: auto; display: block;">
+      <p class="card-text text-muted text-center mt-5">
+        Date de naissance :
+        {{people.birthday|date('d/m/Y')}}
+      </p>
+      <div class="card-body">
+        <p class="card-text">
+          {{ people.description }}
+        </p>
+      </div>
+      {% if people.directed|length > 0 %}
+        <div class="card-body">
+          <p class="card-text">
+            <h4 class="text-center">
+              A réaliser
+            </h4>
+            {% for movie in people.directed %}
+              <a class="btn btn-outline-success m-2" href="{{ path('show_movie', {slug: movie.slug }) }}">
+                {{ movie.title }}
+                -
+                {{movie.releasedAt|date('d/m/Y')}}
+              </a>
+            {% endfor %}
+          </p>
+        </div>
+      {% endif %}
+      {% if people.actedIn|length > 0 %}
+        <div class="card-body">
+          <p class="card-text">
+            <h4 class="text-center">
+              A jouer dans
+            </h4>
+            {% for movie in people.actedIn %}
+              <a class="btn btn-outline-success m-2" href="{{ path('show_movie', {slug: movie.slug }) }}">
+                {{ movie.title }}
+                -
+                {{movie.releasedAt|date('d/m/Y')}}
+
+              </a>
+            {% endfor %}
+          </p>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+{% endblock %}

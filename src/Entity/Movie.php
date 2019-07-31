@@ -81,6 +81,11 @@ class Movie
         $this->ratings = new ArrayCollection();
     }
 
+    public function getMoyenne()
+    {
+        // calcul et retour
+    }
+
     public function getId(): ?int
     {
         return $this->id;
