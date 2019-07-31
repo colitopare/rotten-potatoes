@@ -33,40 +33,39 @@
         </p>
       </div>
       <div class="card-body">
-        <p class="card-text">Toutes les notes :
-          {% for rating in movie.ratings %}
-
-            {{rating.notation}}
-
-            ,
-          {% endfor %}
+        <p class="card-text">AVIS :
         </p>
-      </div>
+        <p class="card-text">moyenne
+          <span class="badge badge-pill badge-danger">{{ movie.getMoyenne | number_format(2, ',') }}</span>
+        </p>
+        {% for rating in movie.ratings %}
+          <div class="alert alert-dismissible alert-primary">
+            <button class="close" data-dismiss="alert" type="button">&times;</button>
+            <span class="badge badge-pill badge-warning">{{rating.notation}}</span>
+            {{rating.comment}}
+          </div>
+        {% endfor %}
+      </p>
+    </div>
 
+
+    {% if is_granted("ROLE_USER") %}
       <div class="card-body">
-        <p class="card-text">Moyenne :
-          {{ movie.getMoyenne | number_format(2, ',') }}
+        <h3 class="text-center">Ajouter votre avis pour ce film</h3>
+        <p class="card-text">
+          {{form_start(formRating)}}
+          {{ form_widget(formRating) }}
+          <div class="text-right">
+            <button class="btn btn-success" type="submit">Valider votre avis</button>
+          </div>
+          {{form_end(formRating)}}
         </p>
       </div>
+    {% else %}
+      <div class="card-body text-center">
+        Connectez-vous pour donner votre avis
+      </a>
+    </div>
+  {% endif %}
 
-      {% if is_granted("ROLE_USER") %}
-        <div class="card-body">
-          <h3 class="text-center">Ajouter votre avis pour ce film</h3>
-          <p class="card-text">
-            {{form_start(formRating)}}
-            {{ form_widget(formRating) }}
-            <div class="text-right">
-              <button class="btn btn-success" type="submit">Valider votre avis</button>
-            </div>
-            {{form_end(formRating)}}
-          </p>
-        </div>
-      {% else %}
-        <div class="card-body text-center">
-          Connectez-vous pour donner votre avis
-        </a>
-      </div>
-    {% endif %}
-
-  </div>
-</div>{% endblock %}
+</div></div>{% endblock %}
