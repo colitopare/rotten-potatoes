@@ -18,18 +18,20 @@
           <div class="card-body">
             <h4 class="card-title">{{movie.title}}</h4>
 
-            <p class="card-text text-muted">Sortie le
-              {{movie.releasedAt|date('d/m/Y')}}</p>
+            <p class="card-text text-muted">
+              Sortie le
+              {{movie.releasedAt|date('d/m/Y')}}
+            </p>
 
+            {# <img src="{{ movie.poster }}" alt=""> #}
+          </div>
+          <div class="card-footer text-right">
 
-          </p>
+            <a class="card-link" href="{{ path('show_movie', {slug: movie.slug}) }}">Voir le fiche de ce film</a>
+          </div>
         </div>
-        <div class="card-footer text-right">
 
-          <a class="card-link" href="{{ path('show_movie', {slug: movie.slug}) }}">Voir le fiche de ce film</a>
-        </div>
-      </div>
-
-    {% endfor %}
+      {% endfor %}
+    </div>
   </div>
-</div>{% endblock %}
+{% endblock %}
