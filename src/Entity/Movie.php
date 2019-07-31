@@ -70,7 +70,7 @@ class Movie
     private $actors;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="movie")
+     * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="movie", orphanRemoval=true)
      */
     private $ratings;
 

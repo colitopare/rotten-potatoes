@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Edit Movie' %}
+
+{% block body %}
+  <class class="jumbotron col-9 mt-2 ml-4">
+
+    <h1 class="text-center">
+      Edition du film
+      {{ movie.id }}
+    </h1>
+
+    {{ include("admin/movie/_form.html.twig", {form: formMovie, button: 'Editer'}) }}
+  </class>
+
+{% endblock %}

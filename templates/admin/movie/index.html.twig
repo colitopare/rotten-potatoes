@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Admin Films' %}
+
+{% block body %}
+  <div class="container mt-4">
+    <h1 class="text-center mb-4">Administration ses films</h1>
+
+    {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+    {% endfor %}
+
+    <div
+      class="text-center mb-5">
+      {# {{ path('admin_movie_create') }} #}
+      <a class="btn btn-success" href="">Ajouter un film</a>
+    </div>
+
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Date sortie</th>
+          <th>Résumé</th>
+          <th>Catégories</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for movie in movies %}
+          <tr>
+            <td>{{ movie.title }}</td>
+            <td>{{ movie.releasedAt | date('d/m/y H:i') }}</td>
+
+            <td>{{ movie.synopsis }}</td>
+            <td>
+              {% for categorie in movie.categories %}
+                {{categorie.title}}
+              {% endfor %}
+            </td>
+
+            <td>
+
+              <a class="btn btn-info mb-2" href="{{ path('admin_movie_edit', {id: movie.id }) }}">Editer</a>
+
+              <form action="{{ path('admin_movie_delete', {id: movie.id}) }}" method="post" onsubmit="return confirm('êtes-vous sûr de vouloir supprimer ce commentaire ?')">
+                <input
+                name="_method" type="hidden" value="DELETE">
+                {# sécurité au niveau de ce formulaire caché #}
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ movie.id) }}">
+                <button class="btn btn-danger">Supprimer</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+
+{% endblock %}
