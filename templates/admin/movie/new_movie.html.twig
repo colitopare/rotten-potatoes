@@ -3,12 +3,13 @@
 {% block title 'New Movie' %}
 
 {% block body %}
+  <class class="jumbotron col-9 mt-2 ml-4">
 
-  <h1>
-    Nouveau film
-    {{ article.id }}
-  </h1>
+    <h1 class="text-center">
+      Nouveau film
+    </h1>
 
-  {{ include("admin/movie/_form.html.twig", {form: formMovie, button: 'Créer'}) }}
+    {{ include("admin/movie/_form.html.twig", {form: formMovie, button: 'Créer'}) }}
+  </class>
 
 {% endblock %}

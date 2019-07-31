@@ -55,6 +55,7 @@ class Movie
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="movies")
      * @ORM\JoinTable(name="movie_category")
+     * @Assert\NotBlank(message="Le film doit au moins avoir une catégorie !")
      */
     private $categories;
 

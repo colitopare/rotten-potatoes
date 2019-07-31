@@ -12,12 +12,9 @@
       </div>
     {% endfor %}
 
-    <div
-      class="text-center mb-5">
-      {# {{ path('admin_movie_create') }} #}
-      <a class="btn btn-success" href="">Ajouter un film</a>
+    <div class="text-center mb-5">
+      <a class="btn btn-success" href="{{ path('admin_movie_create') }}">Ajouter un film</a>
     </div>
-
 
     <table class="table table-striped">
       <thead>

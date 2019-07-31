@@ -45,7 +45,6 @@ class AdminController extends AbstractController
     ]);
   }
 
-
   /**
    * @Route("/admin/movie/{id}/delete", name="admin_movie_delete")
    */
@@ -60,5 +59,31 @@ class AdminController extends AbstractController
     }
 
     return $this->redirectToRoute('admin_movies');
+  }
+
+  /**
+   * @Route("/admin/movie/create", name="admin_movie_create")
+   */
+  public function createMovie(Request $request, ObjectManager $manager)
+  {
+    $movie = new Movie;
+
+    $form = $this->createForm(MovieType::class, $movie);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+      $manager->persist($movie);
+      $manager->flush();
+
+      $this->addFlash('success', 'Le film a été créé avec succès');
+      return $this->redirectToRoute('admin_movies');
+    }
+
+
+    return $this->render('/admin/movie/new_movie.html.twig', [
+      'formMovie' => $form->createView(),
+    ]);
   }
 }
