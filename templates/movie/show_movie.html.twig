@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Liste film d'une catégoie"%}
+
+
+{% block body %}
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="text-center mt-4 mb-4">
+        {{movie.title}}
+      </h1>
+      <p class="card-text text-muted text-center">
+        Sortie le
+        {{movie.releasedAt|date('d/m/Y')}}
+      </p>
+      <img src="{{movie.poster}}" alt="Picture du film {{movie.title}}" style="height: 500px; width: 50%; margin: auto; display: block;">
+      <div class="card-body">
+        <p class="card-text">
+          Le réalisateur :
+          {{ movie.director.fullName }}
+
+
+        </p>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          Les acteurs :
+          {% for actor in movie.actors %}
+            {{actor.fullName}}
+            -
+          {% endfor %}
+        </p>
+      </div>
+      <div class="card-body">
+        <p class="card-text">Notes :
+          {% for rating in movie.ratings %}
+            {{rating.notation}}
+            ,
+          {% endfor %}
+        </p>
+      </div>
+
+      <div class="card-body">
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      </div>
+
+
+    </div>
+  </div>
+{% endblock %}
