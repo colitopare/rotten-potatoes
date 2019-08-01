@@ -15,7 +15,7 @@
 
         <div class="card border-success mb-3 col-4 mr-4" style="max-width: 20rem;">
 
-          <div class="card-body">
+          <div class="card-body text-center">
             <h4 class="card-title">{{movie.title}}</h4>
 
             <p class="card-text text-muted">
@@ -23,7 +23,8 @@
               {{movie.releasedAt|date('d/m/Y')}}
             </p>
 
-            {# <img src="{{ movie.poster }}" alt=""> #}
+            <img src="{{ movie.poster }}" alt="" style="height: 100px; width: 50%; margin: auto; display: block;">
+
           </div>
           <div class="card-footer text-right">
 
