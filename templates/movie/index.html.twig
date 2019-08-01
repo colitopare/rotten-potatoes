@@ -4,7 +4,26 @@
 {% endblock %}
 
 {% block body %}
-  <h1 class="text-center mt-4">
-    ACCUEIL
-  </h1>
+  <div class="jumbotron col-9 mt-2 ml-4">
+
+    <h1 class="text-center mb-5">
+      Les 3 derniers films sortis
+    </h1>
+
+    {{include("movie/_card_accueil.html.twig", { editMovie: lastMovie}) }}
+
+    <h1 class="text-center mt-5 mb-5">
+      Les 3 meilleurs films sortis
+    </h1>
+
+    {{include("movie/_card_accueil.html.twig", { editMovie: bestMovie}) }}
+
+    <h1 class="text-center mt-5 mb-5">
+      Les 3 pires films sortis
+    </h1>
+
+    {{include("movie/_card_accueil.html.twig", { editMovie: pireMovie}) }}
+
+
+  </div>
 {% endblock %}

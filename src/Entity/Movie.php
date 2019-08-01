@@ -86,6 +86,10 @@ class Movie
     // renvoie la moyenne des notes
     public function getMoyenne(): float
     {
+        // faire return 0 s'il n'y a pas encore d'avis
+        if (count($this->getRatings()) == 0) {
+            return 0;
+        }
         $nbreNotation = count($this->getRatings()->getIterator());
         $sumNote = 0;
 

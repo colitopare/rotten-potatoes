@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use App\Form\RatingType;
 use App\Entity\People;
 use App\Repository\CategoryRepository;
+use App\Repository\MovieRepository;
 
 class MovieController extends AbstractController
 {
@@ -20,9 +21,19 @@ class MovieController extends AbstractController
   /**
    * @Route("/", name="home")
    */
-  public function index()
+  public function index(MovieRepository $repo)
   {
-    return $this->render('movie/index.html.twig', []);
+    $lastMovie = $repo->lastMovieReleasedAt(3);
+
+    $bestMovie = $repo->bestMovie(3);
+    // dd($bestMovie);
+    $pireMovie = $repo->pireMovie(3);
+
+    return $this->render('movie/index.html.twig', [
+      'lastMovie' => $lastMovie,
+      'bestMovie' => $bestMovie,
+      'pireMovie' => $pireMovie,
+    ]);
   }
 
   /**

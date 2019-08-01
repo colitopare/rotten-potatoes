@@ -1,0 +1,47 @@
+<div class="d-flex flex-wrap">
+
+  {% for movie in editMovie %}
+    {# {{ movie.id }} #}
+    <div class="card border-success flex-fill mb-3 mr-4" style="max-width: 20rem;">
+      <div class="card-body text-center">
+        <h4 class="card-title">{{movie.title}}
+          <span class="badge badge-pill badge-warning ml-2">{{ movie.getMoyenne | number_format(2, ',') }}</span>
+        </h4>
+        <p class="card-text text-muted">
+          {{movie.releasedAt|date('Y')}}
+        </p>
+        <img src="{{ movie.poster }}" alt="" style="height: 150px; width: 50%; margin: auto; display: block;">
+        <p class="card-text">
+          Réalisé par :
+          <br>
+          <a class="btn btn-outline-success m-2" href="{{ path('show_people', {slug: movie.director.slug }) }}">
+            {{movie.director.fullName}}
+          </a>
+        </p>
+        <p class="card-text">
+          Acteurs :
+          <br>
+          {% for actor in movie.actors %}
+            {% if loop.first %}
+              <a class="btn btn-outline-success m-2" href="{{ path('show_people', {slug: actor.slug }) }}">
+                {{actor.fullName}}
+              </a>
+              <br>
+            {% endif %}
+            {% if loop.last %}
+              <a class="btn btn-outline-success m-2" href="{{ path('show_people', {slug: actor.slug }) }}">
+                {{actor.fullName}}
+              </a>
+              <br>
+            {% endif %}
+          {% endfor %}
+        </p>
+      </div>
+      <div class="card-footer text-right">
+        <a class="card-link" href="{{ path('show_movie', {slug: movie.slug}) }}">Voir le fiche de ce film</a>
+      </div>
+    </div>
+
+  {% endfor %}
+
+</div>

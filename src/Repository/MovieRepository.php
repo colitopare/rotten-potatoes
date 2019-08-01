@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Movie;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Rating;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Movie|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,12 +15,48 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class MovieRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
-    {
-        parent::__construct($registry, Movie::class);
-    }
+  public function __construct(RegistryInterface $registry)
+  {
+    parent::__construct($registry, Movie::class);
+  }
 
-    /*
+  public function lastMovieReleasedAt(int $number)
+  {
+    return $this->createQueryBuilder('m')
+      ->select('m')
+      ->orderBy('m.releasedAt', 'DESC')
+      ->setMaxResults($number)
+      ->getQuery()
+      ->getResult();
+  }
+
+
+  public function bestMovie(int $number)
+  {
+    $result = $this->createQueryBuilder('m')
+      ->leftJoin('m.ratings', 'r')
+      ->orderBy('AVG(r.notation)', 'DESC')
+      ->groupBy('m')
+      ->setMaxResults($number)
+      ->getQuery()
+      ->getResult();
+
+    return $result;
+  }
+
+  public function pireMovie(int $number)
+  {
+    $result = $this->createQueryBuilder('m')
+      ->leftJoin('m.ratings', 'r')
+      ->orderBy('AVG(r.notation)', 'ASC')
+      ->groupBy('m')
+      ->setMaxResults($number)
+      ->getQuery()
+      ->getResult();
+
+    return $result;
+  }
+  /*
     public function findOneBySomeField($value): ?Movie
     {
         return $this->createQueryBuilder('m')
