@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Admin ratings'%}
+
+{% block body %}
+  <div class="container mt-4">
+    <h1 class="text-center mb-4">Administration des avis</h1>
+
+    {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+    {% endfor %}
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Auteur</th>
+          <th>Créé le</th>
+          <th>Avis</th>
+          <th>Note</th>
+          <th>Pour le film</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for rating in ratings %}
+          <tr>
+            <td>{{ rating.author.name }}</td>
+            <td>{{ rating.createdAt | date('d/m/y') }}</td>
+
+            <td>{{ rating.comment }}</td>
+            <td>{{ rating.notation }}</td>
+            <td>{{ rating.movie.title }}</td>
+            <td>
+              <form action="{{ path('admin_rating_delete', {id: rating.id}) }}" method="post" onsubmit="return confirm('êtes-vous sûr de vouloir supprimer cet avis ?')">
+                <input
+                name="_method" type="hidden" value="DELETE">
+                {# sécurité au niveau de ce formulaire caché #}
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ rating.id) }}">
+                <button class="btn btn-danger">Supprimer</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+
+{% endblock %}

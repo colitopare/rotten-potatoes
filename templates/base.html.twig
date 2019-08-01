@@ -13,16 +13,22 @@
   <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand" href="#">Rotten Potatoes</a>
-      <button aria-controls="navbarColor01" aria-expanded="{{ path('home')}}" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarColor01" data-toggle="collapse" type="button">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      <a class="navbar-brand" href="{{ path('home')}}">Rotten Potatoes</a>
 
       <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a href="{{ path('admin_movies') }}">Admin films</a>
-          </li>
+          {% if is_granted("ROLE_ADMIN") %}
+            <li class="nav-item">
+              <a href="{{ path('admin_movies') }}" class="btn btn-outline-success mr-4 ml-4">Admin films</a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ path('admin_ratings') }}" class="btn btn-outline-success mr-4 ml-4">Admin avis</a>
+            </li>
+          {% elseif is_granted("ROLE_MODERATEUR") %}
+            <li class="nav-item">
+              <a href="{{ path('admin_ratings') }}" class="btn btn-outline-success mr-4 ml-4">Admin avis</a>
+            </li>
+          {% endif %}
         </ul>
         <ul class="navbar-nav">
           {% if not is_granted("ROLE_USER") %}

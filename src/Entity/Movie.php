@@ -72,6 +72,7 @@ class Movie
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="movie", orphanRemoval=true)
+     * @ORM\orderBy({"createdAt" = "DESC"})
      */
     private $ratings;
 

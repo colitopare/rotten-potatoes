@@ -4,7 +4,7 @@
 
 {% block body %}
   <div class="container mt-4">
-    <h1 class="text-center mb-4">Administration ses films</h1>
+    <h1 class="text-center mb-4">Administration des films</h1>
 
     {% for message in app.flashes('success') %}
       <div class="alert alert-success">
@@ -43,7 +43,7 @@
 
               <a class="btn btn-info mb-2" href="{{ path('admin_movie_edit', {id: movie.id }) }}">Editer</a>
 
-              <form action="{{ path('admin_movie_delete', {id: movie.id}) }}" method="post" onsubmit="return confirm('êtes-vous sûr de vouloir supprimer ce commentaire ?')">
+              <form action="{{ path('admin_movie_delete', {id: movie.id}) }}" method="post" onsubmit="return confirm('êtes-vous sûr de vouloir supprimer ce film ?')">
                 <input
                 name="_method" type="hidden" value="DELETE">
                 {# sécurité au niveau de ce formulaire caché #}

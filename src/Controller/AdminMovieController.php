@@ -10,7 +10,7 @@ use App\Entity\Movie;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class AdminController extends AbstractController
+class AdminMovieController extends AbstractController
 {
   /**
    * @Route("/admin/movie", name="admin_movies")
@@ -55,7 +55,7 @@ class AdminController extends AbstractController
       $manager->remove($movie);
       $manager->flush();
 
-      $this->addFlash('success', 'Le film supprimé avec succès');
+      $this->addFlash('success', 'Le film a été supprimé avec succès');
     }
 
     return $this->redirectToRoute('admin_movies');
